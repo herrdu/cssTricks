@@ -14,6 +14,10 @@ export class ButtonHover2 extends React.Component {
         </a>
         <a className="btn btn-2">Hover</a>
         <a className="btn btn-3">Hover</a>
+        <a className="btn btn-4">
+          <span>Hover</span>
+        </a>
+        <a className="btn btn-5">Hover</a>
       </div>
     );
   }
