@@ -14,71 +14,179 @@ class MySvg extends React.Component {
   }
 }
 
+class Info extends React.Component {
+  render() {
+    return (
+      <div className="info">
+        <h3>Single-origin coffee whatever</h3>
+        <p>
+          Williamsburg tofu polaroid, 90's Bushwick irony locavore ethnic meh
+          messenger bag Truffaut jean shorts.
+        </p>
+      </div>
+    );
+  }
+}
+
+type keys = 1 | 2 | 3 | 0;
+
 export class DirectionAwareHover extends React.Component {
+  directions = { 0: "top", 1: "right", 2: "bottom", 3: "left" };
+  classNames = ["in", "out"]
+    .map((p) => Object.values(this.directions).map((d) => `${p}-${d}`))
+    .reduce((a, b) => a.concat(b));
+
+  getDirectionKey(
+    ev: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    node: HTMLLIElement
+  ): keys {
+    const { width, height, top, left } = node.getBoundingClientRect();
+
+    const l = ev.pageX - (left + window.pageXOffset);
+    const t = ev.pageY - (top + window.pageYOffset);
+    const x = l - (width / 2) * (width > height ? height / width : 1);
+    const y = t - (height / 2) * (height > width ? width / height : 1);
+
+    return (Math.round(Math.atan2(y, x) / 1.57079633 + 5) % 4) as keys;
+  }
+
+  handleMouseOver(ev: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    ev.stopPropagation();
+    this.update(ev, "in");
+  }
+  handleMouseOut(ev: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    ev.stopPropagation();
+    this.update(ev, "out");
+  }
+
+  update(
+    ev: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    prefix: "in" | "out"
+  ) {
+    const target = ev.target as HTMLLIElement;
+
+    if (target.tagName === "LI") {
+      const n = this.getDirectionKey(ev, target);
+
+      console.log(target.tagName);
+
+      target.classList.remove(...this.classNames);
+      target.classList.add(`${prefix}-${this.directions[n]}`);
+    }
+  }
+
+  handleClick(ev: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    console.log("click");
+    console.log(ev.target);
+  }
+
   render() {
     return (
       <div className="comps-wrap direction-aware">
         <div className="container">
           <ul>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+              onClick={this.handleClick}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li
+              onMouseOver={(ev) => this.handleMouseOver(ev)}
+              onMouseOut={(ev) => this.handleMouseOut(ev)}
+            >
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li onMouseOver={(ev) => this.handleMouseOver(ev)}>
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
-            <li>
-              <a href="#">
+            <li onMouseOut={(ev) => this.handleMouseOut(ev)}>
+              <a href="#" className="normal">
                 <MySvg></MySvg>
               </a>
+              <Info></Info>
             </li>
           </ul>
         </div>
