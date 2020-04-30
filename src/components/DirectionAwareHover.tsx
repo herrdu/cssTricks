@@ -51,11 +51,9 @@ export class DirectionAwareHover extends React.Component {
   }
 
   handleMouseOver(ev: React.MouseEvent<HTMLLIElement, MouseEvent>) {
-    ev.stopPropagation();
     this.update(ev, "in");
   }
   handleMouseOut(ev: React.MouseEvent<HTMLLIElement, MouseEvent>) {
-    ev.stopPropagation();
     this.update(ev, "out");
   }
 
@@ -63,15 +61,20 @@ export class DirectionAwareHover extends React.Component {
     ev: React.MouseEvent<HTMLLIElement, MouseEvent>,
     prefix: "in" | "out"
   ) {
+    console.log("handleMouseOver");
+
     const target = ev.target as HTMLLIElement;
+    const n = this.getDirectionKey(ev, target);
 
     if (target.tagName === "LI") {
-      const n = this.getDirectionKey(ev, target);
-
       console.log(target.tagName);
 
       target.classList.remove(...this.classNames);
       target.classList.add(`${prefix}-${this.directions[n]}`);
+    } else if (target.tagName === "A") {
+      const p = target.parentElement;
+      p.classList.remove(...this.classNames);
+      p.classList.add(`${prefix}-${this.directions[n]}`);
     }
   }
 
@@ -85,109 +88,20 @@ export class DirectionAwareHover extends React.Component {
       <div className="comps-wrap direction-aware">
         <div className="container">
           <ul>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-              onClick={this.handleClick}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li
-              onMouseOver={(ev) => this.handleMouseOver(ev)}
-              onMouseOut={(ev) => this.handleMouseOut(ev)}
-            >
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li onMouseOver={(ev) => this.handleMouseOver(ev)}>
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
-            <li onMouseOut={(ev) => this.handleMouseOut(ev)}>
-              <a href="#" className="normal">
-                <MySvg></MySvg>
-              </a>
-              <Info></Info>
-            </li>
+            {[...Array(12).keys()].map(() => {
+              return (
+                <li
+                  onMouseOver={(ev) => this.handleMouseOver(ev)}
+                  onMouseOut={(ev) => this.handleMouseOut(ev)}
+                  onClick={this.handleClick}
+                >
+                  <a href="#" className="normal">
+                    <MySvg></MySvg>
+                  </a>
+                  <Info></Info>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

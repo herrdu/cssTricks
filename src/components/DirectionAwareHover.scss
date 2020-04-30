@@ -28,6 +28,7 @@ $clouds: #ecf0f1;
       margin: 5px;
       padding: 0;
       list-style: none;
+      perspective: 400px;
 
       a {
         display: inline-block;
@@ -54,6 +55,7 @@ $clouds: #ecf0f1;
       }
 
       .info {
+        box-sizing: border-box;
         // hide-initial-state
         transform: rotate3d(1, 0, 0, 90deg);
 
